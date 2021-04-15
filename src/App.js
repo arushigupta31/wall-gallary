@@ -1,25 +1,28 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import axios from 'axios';
+import Gallary from './Gallary/gallary';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component{
+  constructor(){
+    super();
+    this.state={
+        data:[]
+    }
+  }
+  componentDidMount=()=>{
+    const url="http://www.mocky.io/v2/5ecb5c353000008f00ddd5a0";
+    axios.get(url)
+      .then(result => this.setState({
+        data: result.data
+      }))
+      .catch(error=> console.log(error))
+  }
+  render() {
+    return(
+      <div>
+        <Gallary data={this.state.data}/>
+      </div>
+    )
+  }
 }
-
-export default App;
